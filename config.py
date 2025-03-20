@@ -1,0 +1,8 @@
+# Bot Token
+BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+
+# Bot Username
+BOT_USERNAME = "YOUR_BOT_USERNAME_HERE"
+
+# Required Channels for access
+REQUIRED_CHANNELS = ["@YOUR_CHANNEL_USERNAME_HERE"]
