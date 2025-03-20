@@ -1,0 +1,11 @@
+# Core dependency for interacting with the Telegram Bot API
+python-telegram-bot==20.0
+
+# Optional: For better logging (if you're using loguru)
+loguru==0.7.0
+
+# Optional: For managing configuration via environment variables (if you switch back to .env)
+python-dotenv==1.0.0
+
+# SQLite (Optional: Only required if using an external SQLite package)
+pysqlite3==0.4.8
