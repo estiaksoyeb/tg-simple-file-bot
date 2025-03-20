@@ -1,5 +1,6 @@
 import logging
 import asyncio
+from config import REQUIRED_CHANNELS
 from database import get_file_id
 from utils import is_user_in_channels
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -21,16 +22,19 @@ async def start(update, context):
 
         # Check if the user is in required channels
         if not await is_user_in_channels(user_id, app):
-            # Create a retry button with the short_id included in the callback data
-            keyboard = [[InlineKeyboardButton("Retry", callback_data=f"retry_{short_id}")]]
+            # Dynamically create buttons for each required channel
+            keyboard = []
+            for channel in REQUIRED_CHANNELS:
+                keyboard.append([InlineKeyboardButton(f"Join {channel}", url=f"https://t.me/{channel[1:]}")])  # Remove '@' from channel name
+
+            # Add the Retry button at the bottom
+            keyboard.append([InlineKeyboardButton("Retry", callback_data=f"retry_{short_id}")])
             reply_markup = InlineKeyboardMarkup(keyboard)
 
-            # Send the error message with the retry button
+            # Send the error message with the buttons
             await update.message.reply_text(
                 "❌ You must join the required channels to access this feature.\n\n"
-                "Please join the following channel(s) and try again:\n"
-                "@kaidos_raimei_hakke\n\n"
-                "After joining, click the 'Retry' button below to receive the file.",
+                "Please join the channels below and then click 'Retry' to receive the file.",
                 reply_markup=reply_markup
             )
             return
